@@ -1,0 +1,93 @@
+﻿<Window x:Class="InventoryTest.OrderForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InventoryTest"
+        mc:Ignorable="d"
+        Title="Order Form" Height="450" Width="800">
+    <Window.Resources>
+        <local:FullNameConverter x:Key="FullNameConverterKey"/>
+        <local:CustomerFullNameConverter x:Key="CustomerFullNameConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <ListView Name="ListView_Order" Grid.Row="0" Grid.ColumnSpan="4" SelectionChanged="ListView_Order_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="OrderID" DisplayMemberBinding="{Binding Path=OrderID}"/>
+                            <GridViewColumn Header="Customer" DisplayMemberBinding="{Binding Path=Customer, Converter={StaticResource CustomerFullNameConverter}}"/>
+                    <GridViewColumn Header="Date Ordered" DisplayMemberBinding="{Binding Path=DateOrdered}"/>
+                    <GridViewColumn Header="Discount" DisplayMemberBinding="{Binding Path=Discount}"/>
+                    <GridViewColumn Header="Payment Type" DisplayMemberBinding="{Binding Path=PaymentType}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Expander Header="Filter" Grid.Row="1">
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                <TextBlock Name="TextBlock_FilterbyOrderID" Margin="3" Text="Order ID"/>
+                <TextBox Name="TextBox_FilterbyOrderID" Margin="3" Width="200" TextChanged="TextBox_FilterbyOrderID_TextChanged"/>
+            </StackPanel>
+        </Expander>
+        
+        <Grid Name="Grid_Details"  Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Name="TextBlock_OrderID" Text="Order ID" Margin="3" Grid.Row="0" Grid.Column="0"/>
+            <TextBox Name="TextBox_OrderID" Text="{Binding OrderID}" Margin="3" Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
+
+            <TextBlock Name="TextBlock_CustomerID" Text="Customer" Margin="3" Grid.Row="1" Grid.Column="0"/>
+            <ComboBox Name="ComboBox_CustomerID" SelectedValue="{Binding Path=CustomerID}" SelectedValuePath="CustomerID" Margin="3" Grid.Row="1" Grid.Column="1">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock DataContext="{Binding}">
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{StaticResource FullNameConverterKey}" Mode="OneWay">
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="FirstName"/>
+                                        <Binding Path="LastName"/>
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBlock Name="TextBlock_DateOrdered" Text="Date Ordered" Margin="3" Grid.Row="2" Grid.Column="0"/>
+            <DatePicker Name="DatePicker_DateOrdered" Text="{Binding Path=DateOrdered}" Margin="3" Grid.Row="2" Grid.Column="1" IsEnabled="False"/>
+
+            <TextBlock Name="TextBlock_Note" Text="Note" Margin="3" Grid.Row="3" Grid.Column="0"/>
+            <TextBox Name="TextBox_Note" Text="{Binding Note}" Margin="3" Grid.Row="3" Grid.Column="1"/>
+
+            <TextBlock Name="TextBlock_Discount" Text="Discount" Margin="3" Grid.Row="4" Grid.Column="0"/>
+            <TextBox Name="TextBox_Discount" Text="{Binding Discount}" Margin="3" Grid.Row="4" Grid.Column="1"/>
+
+            <Button Name="Button_AddOrderItem" Click="Button_AddOrderItem_Click"  Content="View Order Item" Margin="3" Grid.Row="5" Grid.Column="1"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.ColumnSpan="4" Grid.Row="7" Grid.Column="0">
+                <Button Name="Button_NewOrderItem" Click="Button_NewOrderItem_Click" Content="New Order Item" Margin="3"/>
+                <Button Name="Button_SaveOrderItem" Click="Button_SaveOrderItem_Click"  Content="Save Order Item" Margin="3"/>
+                <Button Name="Button_DeleteOrderItem" Click="Button_DeleteOrderItem_Click"  Content="Delete Order Item" Margin="3"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

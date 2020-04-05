@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="InventoryTest.CustomerUserControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InventoryTest"
+        mc:Ignorable="d"
+        Name="Customer" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListView Name="ListViewCustomer" Grid.Row="0" SelectionChanged="ListViewCustomer_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Customer ID" DisplayMemberBinding="{Binding Path=CustomerID}"/>
+                    <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding Path=FirstName}"/>
+                    <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding Path=LastName}"/>
+                    <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Path=Address}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <GridSplitter Grid.Column="1">
+
+        </GridSplitter>
+        <Grid Name="Grid_Details" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Customer ID:" Grid.Row="0"  Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox x:Name="tbCustomerID" Text="{Binding CustomerID}" IsReadOnly="True" Grid.Row="0"  Grid.Column="1" TextWrapping="Wrap" Margin="3" VerticalAlignment="Top" />
+
+            <TextBlock Text="First Name:" Grid.Row="1"  Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox x:Name="TextBox_FirstName" Grid.Row="1" Text="{Binding FirstName}" Grid.Column="1"  TextWrapping="Wrap"  Margin="3" VerticalAlignment="Top"  IsReadOnly="True"/>
+
+            <TextBlock Text="Last Name:" Grid.Row="2"  Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox x:Name="TextBox_LastName" Grid.Row="2" Text="{Binding LastName}" Grid.Column="1"  TextWrapping="Wrap"  Margin="3" VerticalAlignment="Top" IsReadOnly="True" />
+
+            <TextBlock Text="Address:" Grid.Row="3"  Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox x:Name="tbAddress" Grid.Row="3" Text="{Binding Address}" Grid.Column="1"  TextWrapping="Wrap"  Margin="3" VerticalAlignment="Top"  IsReadOnly="True"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4">
+                <Button Content="New" Margin="2" Name="Button_New"/>
+                <Button Content="Edit" Margin="2" Name="Button_Save" />
+                <Button Content="Delete" Margin="2" Name="Button_Delete"/>
+
+                <Button Content="Apply" Margin="2" Name="Button_Apply"/>
+                <Button Content="Cancel" Margin="2" Name="Button_Cancel"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
